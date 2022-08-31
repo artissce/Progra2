@@ -40,7 +40,7 @@ void createFile(){
 		exit(1);
 	}
 	
-	for(int i=0; i<5; i++){//recorre el arreglo para Aagregar los datos
+	for(int i=0; i<5; i++){//recorre el arreglo para Agregar los datos
 		fprintf(arch, "%d\t", infor[i].pos2);
 		fprintf(arch, "%s\n", infor[i].fecha);
 	}
