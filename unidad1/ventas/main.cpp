@@ -2,28 +2,34 @@
 /*Ana Karen Cuenca Esquivel -177932
 Programacion 2
 Carrera ITI
-cLASE 9-10
-bidimensionales dinamicos de estructuras
+CLASE 9-10
+estrcuturas sin enlazar y ordenadas
 */
 int main(){
+	//void tamanoInfo();
+	sE=validaEntero("No. de personal: ");
+	Personal **dato=(Personal **)malloc(sE*sizeof(Personal *));
+	int a[sE]={0};
+	recibeEmpleado(dato,a);
 	
-	f=validaEntero("No. Apuntadores: ");
-	Personal **dato=(Personal **)malloc(f*sizeof(Personal *));
-	Catalogo **info=(Catalogo **)malloc(f*sizeof(Catalogo *));
-	Venta **sell=(Venta **)malloc(f*sizeof(Venta *));
-	//Venta **dato=(Venta **)malloc(f*sizeof(Venta *));
+	sC=validaEntero("No. de catalogo: ");
+	Catalogo **info=(Catalogo **)malloc(sC*sizeof(Catalogo *));
+	int b[sC]={0};
+	recibeCatalogo(info,b);
 	
-
-	/*
-	c=validaEntero("No. Registros: ");
+	sV=validaEntero("No. de ventas: ");
+	Venta **sell=(Venta **)malloc(sV*sizeof(Venta *));
+	int c[sV]={0};
 	
-	for(int i=0; i<f; i++){
-		*(dato + i) = (Relacion *)malloc(c*sizeof(Relacion));
-	}*/
+	imprimeEmpleado(dato,a);
+	imprimeCatalogo(info,b);
+	recibeVenta(dato,a, info,b, sell,c);
+	imprimeVenta(dato,a, info,b, sell,c);
+	ordenVentas(dato,a, info,b, sell,c);
 	
-	registro(dato,info,sell);
-	imprime(dato,info,sell);
-	free(dato,info,sell);
+	free(dato);
+	free(info);
+	free(sell);
 	
 	return 0;
 }
