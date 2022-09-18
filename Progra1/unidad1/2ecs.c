@@ -1,0 +1,29 @@
+/*Programa para resolver un sistema de ecuaciones de dos variables 
+Ana Karen Cuenca Esquivel - 177932
+27/01/2022
+*/
+#include<stdio.h>
+#include<stdlib.h>
+int main(void){
+    int a,b,c,d,e,f;
+    float x,y;
+    
+    printf("\nIngrese los coeficientes de la primera ecuacion: ");
+    scanf("%i", &a);
+    scanf("%i", &b);
+    scanf("%i", &e);
+    printf("\nIngrese los coeficientes de la segunda ecuacion: ");
+    scanf("%i", &c);
+    scanf("%i", &d);
+    scanf("%i", &f);
+    if ((a*d-b*c) == 0){
+       printf("ERROR");
+    }
+    else{
+        x=(e*d-b*f)/(a*d-b*c);
+        printf("%fEl valor de x es: ",x);
+        y=(a*f-e*c)/(a*d-b*c);
+        printf("%fEl valor de y es: ",y);
+    }
+    return 0;
+}
