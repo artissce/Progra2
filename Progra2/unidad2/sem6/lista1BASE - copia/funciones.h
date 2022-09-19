@@ -22,12 +22,13 @@ void agregarFinal(){
 
 void agregarInicio(){
 	struct Empleado *nuevo = registro();//memoria que reserva considerando que es un string
-	if(ultimo== NULL){//evalua si se guardo el espacio de memoria
-		ultimo=nuevo;
-		primero=nuevo;
+	//evalua si se guardo el espacio de memoria
+	if(primero == NULL){
+		primero = nuevo;
+		ultimo = nuevo;
 	}
 	else{
-		primero->sig=nuevo;
+		nuevo->sig=primero;
 		primero=nuevo;
 	}
 }
@@ -35,7 +36,7 @@ void agregarInicio(){
 void mostrar_lista(Empleado *primero){
 	struct Empleado *auxiliar = primero; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
 	cout << endl << "Mostrando la lista completa: " << endl;
-	cout << "Ubicación: " << setw(10);
+	cout << "Ubicacion: " << setw(10);
 	cout << "IdEmpleado: " << setw(10);
 	cout << "Nombre: " << setw(10);
 	cout << "Puesto: " << setw(10);
@@ -59,7 +60,7 @@ void mostrarListas(){
 	system("cls");
 	
 	struct Listas *aux = primLista; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
-	cout << "Ubicación Lista: " << setw(20);
+	cout << "Ubicacion Lista: " << setw(20);
 	cout << "Lista (primer nodo): " << setw(20);
 	cout << "Siguiente: " << endl;
 	
@@ -86,7 +87,7 @@ void agregarLista(){
 	primero = NULL;
 	ultimo = NULL;
 	while(sigue == 1 ){
-		agregarFinal();
+		agregarInicio();
 		sigue = validaEntero("Teclea 1 para agregar otro: ");
 	}
 	nuevo->sig = NULL;
