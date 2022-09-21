@@ -108,6 +108,31 @@ void borrarPosicion(){
 	}
 	getchar();
 }
+void borrarID(){
+	Empleado *actual = primero, *previo, *aux;
+	bool bandera=true;
+	int id = 0, i = 1;
+	id = validaEntero("Posición: ");
+	previo=actual;
+	while(actual!=NULL){
+		if(id == actual->idEmpleado ){
+				aux=actual->sig;
+				previo->sig=aux;
+				free(actual);
+				bandera=false;
+				break;	
+		}else{
+			previo=actual;
+			actual=previo->sig;
+		}
+	}
+	if(bandera){
+		cout<<"ID no existe"<<endl;
+		//borrarUltimo();
+	}
+	getchar();
+}
+
 void mostrar_lista(Empleado *primero){
 	struct Empleado *auxiliar = primero; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
 	cout << endl << "Mostrando la lista completa: " << endl;
@@ -194,7 +219,8 @@ void agregarLista(){
 		cout << endl << "1-. Eliminar inicio";
 		cout << endl << "2-. Eliminar final";
 		cout << endl << "3-. Eliminar en otra posicion";
-		cout << endl << "4-. Salir del menu"<<endl;
+		cout << endl << "4-. Eliminar por ID";
+		cout << endl << "5-. Salir del menu"<<endl;
 		while(sigue == 1 ){
 			int op=0;
 			op=validaEntero("Escribe tu opcion: ");
@@ -208,7 +234,10 @@ void agregarLista(){
 				case 3: 
 					borrarPosicion();
 				break;
-				case 4: 
+				case 4:
+					borrarID();
+				break;
+				case 5: 
 					cout << "Finalizacion de modificacion de lista"<<endl;
 					sigue=2;
 				break;
