@@ -109,28 +109,32 @@ void borrarPosicion(){
 	getchar();
 }
 void borrarID(){
-	Empleado *actual = primero, *previo, *aux;
-	bool bandera=true;
-	int id = 0, i = 1;
-	id = validaEntero("Posición: ");
-	previo=actual;
-	while(actual!=NULL){
-		if(id == actual->idEmpleado ){
-				aux=actual->sig;
-				previo->sig=aux;
-				free(actual);
-				bandera=false;
-				break;	
-		}else{
-			previo=actual;
-			actual=previo->sig;
+	Empleado *actual, *previo;
+	//bool bandera=true;
+	int id = 0; //i = 1;
+	if(primero==NULL){
+		cout<<"No hay elementos en la lista"<<endl;
+	}else{
+		id = validaEntero("Id a borrar: ");
+		//previo=actual;
+		if(id==primero->idEmpleado){
+			borrarPrimero();
 		}
+		else{
+			actual=primero;
+			while(actual!=NULL && actual->idEmpleado!=id){
+					previo=actual;
+					actual=actual->sig;
+			}
+			if(actual!=NULL){
+				previo->sig=actual;
+				if(actual==ultimo) ultimo =previo;
+				free(actual);
+			}
+		}
+		getchar();
 	}
-	if(bandera){
-		cout<<"ID no existe"<<endl;
-		//borrarUltimo();
-	}
-	getchar();
+
 }
 
 void mostrar_lista(Empleado *primero){
@@ -150,7 +154,8 @@ void mostrar_lista(Empleado *primero){
 		cout << auxiliar->puesto << setw(10);
 		cout << auxiliar->salario << setw(10);
 		cout << auxiliar->sig << endl; // No es necesario escribir esto en los códigos, pero es importante comprender que se está guardando la memoria del siguiente nodo dentro de las listas generadas a lo largo de nuestro código y la creación de nodos en el ejercicio
-		auxiliar = auxiliar->sig;
+		ultimo=auxiliar;
+		auxiliar = auxiliar->sig;//me muevo por esta linea
 	}
 	cout << endl << "PRIMER NODO: " << primero;
 	cout << endl << "ULTIMO NODO: " << ultimo;
@@ -158,7 +163,7 @@ void mostrar_lista(Empleado *primero){
 
 void mostrarListas(){
 	system("cls");
-	
+	cout << endl<< endl;
 	struct Listas *aux = primLista; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
 	cout << "Ubicacion Lista: " << setw(20);
 	cout << "Lista (primer nodo): " << setw(20);
@@ -179,7 +184,12 @@ void mostrarListas(){
 		aux = aux->sig;
 	}
 }
-
+/*
+AGREGAR MODIFICACIONES
+imprime las listas
+en que nodo
+que informacion quiere modificar
+*/
 void agregarLista(){
 	Listas *nuevo = new Listas;
 	int sigue = 1,sigue2=1;
@@ -227,15 +237,19 @@ void agregarLista(){
 			switch(op){
 				case 1: 
 					borrarPrimero();
+					mostrar_lista(primero);
 				break;
 				case 2: 
 					borrarUltimo();
+					mostrar_lista(primero);
 				break;
 				case 3: 
 					borrarPosicion();
+					mostrar_lista(primero);
 				break;
 				case 4:
 					borrarID();
+					mostrar_lista(primero);
 				break;
 				case 5: 
 					cout << "Finalizacion de modificacion de lista"<<endl;
@@ -245,11 +259,8 @@ void agregarLista(){
 			sigue = validaEntero("Teclea 1 para agregar otro: ");
 		}
 	}
-	
 	nuevo->sig = NULL;
-
 	nuevo->lista = primero;
-	
 	if(primLista == NULL){
 		primLista = nuevo;
 		ultLista = nuevo;
