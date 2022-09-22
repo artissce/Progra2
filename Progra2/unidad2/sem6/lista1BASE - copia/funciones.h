@@ -3,7 +3,7 @@ Empleado *registro(){
 	int num, aux[20];
 	bool band=true;
 	do{
-		num=validaEntero("Id del Empleado");
+		num=validaEntero("Id del Empleado: ");
 		if(aux[num]==0){
 			aux[num]=1;
 			nuevo->idEmpleado = num;
