@@ -109,7 +109,29 @@ void borrarPosicion(){
 	getchar();
 }
 void borrarID(){
-	Empleado *actual, *previo;
+	Empleado *actual,*previo,*otro;
+	actual=primero;
+	bool bandera=true;
+	int id=0;
+	id=validaEntero("Id: ");
+	previo=actual;
+	while(actual!=NULL){
+		if(id==actual->idEmpleado){
+			otro=actual->sig;
+			previo->sig=otro;
+			free(actual);
+			bandera=false;
+			break;
+		}else{
+			previo=actual;
+			actual=previo->sig;
+		}
+		if(bandera){
+			cout<<"El id no existe"<<endl;
+		}
+		getchar();
+	}
+	/*Empleado *actual, *previo;
 	//bool bandera=true;
 	int id = 0; //i = 1;
 	if(primero==NULL){
@@ -134,7 +156,7 @@ void borrarID(){
 		}
 		getchar();
 	}
-
+*/
 }
 
 void mostrar_lista(Empleado *primero){
@@ -256,7 +278,7 @@ void agregarLista(){
 					sigue=2;
 				break;
 			}
-			sigue = validaEntero("Teclea 1 para agregar otro: ");
+			sigue = validaEntero("\nTeclea 1 seguir borrando: ");
 		}
 	}
 	nuevo->sig = NULL;
