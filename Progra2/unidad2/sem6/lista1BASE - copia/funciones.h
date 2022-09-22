@@ -1,14 +1,27 @@
 Empleado *registro(){
-	Empleado *nuevo = new Empleado;
-	nuevo->idEmpleado = validaEntero("Ingresa el id del empleado: ");
-	cout << "Nombre: ";
-	cin >> nuevo->nombre;
-	cout << "Puesto: ";
-	cin >> nuevo->puesto;
+	struct Empleado *nuevo=new Empleado;
+	int num, aux[20];
+	bool band=true;
+	do{
+		num=validaEntero("Id del Empleado");
+		if(aux[num]==0){
+			aux[num]=1;
+			nuevo->idEmpleado = num;
+			band=true;
+		}
+		else{
+			cout<<"\nYa existe ese id\n";
+			band=false;
+		}
+	}while(band==false);
+	cout<<"Nombre: ";
+	cin>>nuevo->nombre;
+	cout<<"Puesto: ";
+	cin>>nuevo->puesto;
 	nuevo->salario = validaFlotante("Salario: ");
-	nuevo->sig = NULL;
+	nuevo->sig=NULL;
 	return nuevo;
-}
+	}
 void agregarFinal(){
 	Empleado *nuevo = registro();
 	if(primero == NULL){
@@ -109,31 +122,29 @@ void borrarPosicion(){
 	getchar();
 }
 void borrarID(){
-	Empleado *actual,*previo,*otro;
-	actual=primero;
+	Empleado *actual=primero, *previo;
 	bool bandera=true;
-	int id=0;
-	id=validaEntero("Id: ");
-	previo=actual;
+	int id = 0,i=1; //i = 1;
+	id = validaEntero("Id a borrar: ");
 	while(actual!=NULL){
 		if(id==actual->idEmpleado){
-			otro=actual->sig;
-			previo->sig=otro;
+			previo->sig=actual->sig;
 			free(actual);
 			bandera=false;
 			break;
 		}else{
 			previo=actual;
-			actual=previo->sig;
+			actual=actual->sig;	
 		}
-		if(bandera){
-			cout<<"El id no existe"<<endl;
+		if(actual!=NULL){
+		printf("Id no existe");	
 		}
-		getchar();
 	}
+	
+	
 	/*Empleado *actual, *previo;
-	//bool bandera=true;
-	int id = 0; //i = 1;
+	bool bandera=true;
+	int id = 0,i=1; //i = 1;
 	if(primero==NULL){
 		cout<<"No hay elementos en la lista"<<endl;
 	}else{
@@ -155,10 +166,29 @@ void borrarID(){
 			}
 		}
 		getchar();
-	}
-*/
-}
+	}*/
 
+}
+void modificarId(){
+	Empleado *actual=primero, *previo;
+	bool bandera=true;
+	int id = 0,i=1; //i = 1;
+	id = validaEntero("Id a borrar: ");
+	while(actual!=NULL){
+		if(id==actual->idEmpleado){
+			previo->sig=actual->sig;
+			free(actual);
+			bandera=false;
+			break;
+		}else{
+			previo=actual;
+			actual=actual->sig;	
+		}
+		if(actual!=NULL){
+		printf("Id no existe");	
+		}
+	}
+}
 void mostrar_lista(Empleado *primero){
 	struct Empleado *auxiliar = primero; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
 	cout << endl << "Mostrando la lista completa: " << endl;
@@ -278,7 +308,7 @@ void agregarLista(){
 					sigue=2;
 				break;
 			}
-			sigue = validaEntero("\nTeclea 1 seguir borrando: ");
+			sigue = validaEntero("Teclea 1 para seguir borrando: ");
 		}
 	}
 	nuevo->sig = NULL;
