@@ -358,6 +358,11 @@ void agregarLista(){
 			sigue=validaEntero("Teclea 1 para borrar otro: ");
 		}
 	}
+
+	mostrar_lista(primero);
+	ordenaSeleccion(primero);
+	
+
 	nuevo->sig = NULL;
 	nuevo->lista = primero;
 	if(primLista == NULL){
@@ -366,5 +371,59 @@ void agregarLista(){
 	}else{
 		ultLista->sig=nuevo;
 		ultLista = nuevo;
+	}
+}
+void buscarLista(){
+	Empleado *nLista = primero;
+	int cont, lista, sigue;
+	cout<<endl<<endl;
+	sigue = validaEntero("Desea modificar alguna lista? 1..SI, otro..NO:  ");
+	while(sigue==1){
+		struct Listas *aux = primLista; 
+		bool bandera=false;
+		cont=0;
+		cout<<endl<<endl;
+		lista = validaEntero("Que lista desea modificar: ");
+		while(aux != NULL){
+			cont++;
+			if(cont == lista){
+				nLista = aux->lista;
+				bandera=true;
+			}
+			aux = aux->sig;
+		}
+		if(bandera==true){
+			mostrar_lista(nLista); //no es necesario most
+			borrarPrimero(nLista);
+			mostrar_lista(nLista);
+			
+			borrarUltimo(nLista);
+			mostrar_lista(nLista);
+			
+			eliminarPosicion(nLista);  //primero
+			mostrar_lista(nLista);
+			
+			eliminarPosicion(nLista);  //ultimo
+			mostrar_lista(nLista);
+			
+			eliminarPosicion(nLista);  //interno
+			mostrar_lista(nLista);
+			
+			borrarId(nLista);  //primer
+			mostrar_lista(nLista);
+			
+			borrarId(nLista);  //ultimo
+			mostrar_lista(nLista);
+			
+			borrarId(nLista);  //interno
+			mostrar_lista(nLista);
+			
+			actualizarDato(nLista);
+			mostrar_lista(nLista);
+		}else{
+			cout<<endl<<"Esa lista no existe";
+		}
+		cout<<endl;
+		sigue = validaEntero("Desea modificar otra lista? 1..SI, otro..NO: ");
 	}
 }
