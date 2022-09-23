@@ -131,7 +131,7 @@ void borrarPosicion(Empleado *primero){//checar
 	}
 	getchar();
 }
-void borrarID(){//CHECAR
+void borrarID(Empleado *nLista){//CHECAR
 	Empleado *actual, *previo;
 	int id;
 	cout<<endl<<endl;
@@ -337,7 +337,7 @@ void agregarLista(){
 					mostrar_lista(primero);
 				break;
 				case 4:
-					borrarID();
+					borrarID(primero);
 					mostrar_lista(primero);
 				break;
 				case 5: 
@@ -400,22 +400,22 @@ void buscarLista(){
 			borrarUltimo(nLista);
 			mostrar_lista(nLista);
 			
-			eliminarPosicion(nLista);  //primero
+			borrarPosicion(nLista);  //primero
 			mostrar_lista(nLista);
 			
-			eliminarPosicion(nLista);  //ultimo
+			borrarPosicion(nLista);  //ultimo
 			mostrar_lista(nLista);
 			
-			eliminarPosicion(nLista);  //interno
+			borrarPosicion(nLista);  //interno
 			mostrar_lista(nLista);
 			
-			borrarId(nLista);  //primer
+			borrarID(nLista);  //primer
 			mostrar_lista(nLista);
 			
-			borrarId(nLista);  //ultimo
+			borrarID(nLista);  //ultimo
 			mostrar_lista(nLista);
 			
-			borrarId(nLista);  //interno
+			borrarID(nLista);  //interno
 			mostrar_lista(nLista);
 			
 			actualizarDato(nLista);
