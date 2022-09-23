@@ -6,6 +6,7 @@
 #include <string> //string
 using namespace std;
 
+FILE *arch = NULL;
 struct Empleado{
 	int idEmpleado;
 	//char nombre[30];

@@ -1,28 +1,39 @@
-Empleado *registro(){
-	struct Empleado *nuevo=new Empleado;
-	int num, aux[20];
-	bool band=true;
-	do{
-		num=validaEntero("Id del Empleado: ");
-		if(aux[num]==0){
-			aux[num]=1;
-			nuevo->idEmpleado = num;
-			band=true;
+Empleado *registro(){//ya esta
+	Empleado *nuevo = new Empleado;
+	bool bandera = true;
+	
+	while(bandera){
+		nuevo->idEmpleado = validaEntero("\nidEmpleado: ");
+		if(unico != 0){
+			struct Empleado *auxiliar = primero;
+			while(auxiliar!=NULL){
+				if(nuevo->idEmpleado != auxiliar->idEmpleado){
+					auxiliar = auxiliar->sig;
+					bandera = false;
+				}else{
+					cout<<"El ID ya existe"<<endl;
+					bandera = true;
+					break;
+				}
+			}
+		}else{
+			bandera=false;
 		}
-		else{
-			cout<<"\nYa existe ese id\n";
-			band=false;
-		}
-	}while(band==false);
-	cout<<"Nombre: ";
-	cin>>nuevo->nombre;
-	cout<<"Puesto: ";
-	cin>>nuevo->puesto;
-	nuevo->salario = validaFlotante("Salario: ");
-	nuevo->sig=NULL;
-	return nuevo;
 	}
-void agregarFinal(){
+	cout << "Nombre: ";
+	//cin >> nuevo->nombre;
+	getline(cin,nuevo->nombre);
+	cout << "Puesto: ";
+	//cin >> nuevo->puesto;
+	getline(cin,nuevo->puesto);
+	nuevo->salario = validaFlotante("Salario: ");
+	nuevo->sig = NULL;
+	unico=1;
+	bandera=true;
+	return nuevo;
+}
+
+void agregarFinal(){//listo
 	Empleado *nuevo = registro();
 	if(primero == NULL){
 		primero = nuevo;
@@ -32,8 +43,7 @@ void agregarFinal(){
 		ultimo = nuevo;
 	}
 }
-
-void agregarInicio(){
+void agregarInicio(){//listo
 	struct Empleado *nuevo = registro();//memoria que reserva considerando que es un string
 	//evalua si se guardo el espacio de memoria
 	if(primero == NULL){
@@ -45,8 +55,7 @@ void agregarInicio(){
 		primero=nuevo;
 	}
 }
-
-void agregarPosicion(){
+void agregarPosicion(){//listo
 	Empleado *aux = primero;
 	bool bandera=true;
 	int pos = 0, i = 1;
@@ -74,12 +83,13 @@ void agregarPosicion(){
 	}
 	getchar();
 }
-void borrarPrimero(){
+
+void borrarPrimero(Empleado *primero){//checar
 	Empleado *tem = primero;
 	primero = primero->sig;
 	free(tem);
 }
-void borrarUltimo(){
+void borrarUltimo(Empleado *primero){//checar
 	Empleado *actual, *previo;
 	actual = primero;
 	while(actual != ultimo){
@@ -90,7 +100,7 @@ void borrarUltimo(){
 	ultimo = previo;
 	free(actual);
 }
-void borrarPosicion(){
+void borrarPosicion(Empleado *primero){//checar
 	Empleado *actual = primero, *previo, *aux;
 	bool bandera=true;
 	int pos = 0, i = 1;
@@ -98,7 +108,7 @@ void borrarPosicion(){
 	pos=pos+1;
 	previo=actual;
 	if(pos==1){
-		borrarPrimero();
+		borrarPrimero(primero);
 		getchar();
 	}else{
 		while(actual!=NULL){
@@ -116,80 +126,115 @@ void borrarPosicion(){
 		}
 		if(bandera){
 			cout<<"La posición NO existe, el nodo se eliminara al final de la lista"<<endl;
-			borrarUltimo();
+			borrarUltimo(primero);
 		}
 	}
 	getchar();
 }
-void borrarID(){
-	Empleado *actual=primero, *previo;
-	bool bandera=true;
-	int id = 0,i=1; //i = 1;
-	id = validaEntero("Id a borrar: ");
-	while(actual!=NULL){
-		if(id==actual->idEmpleado){
-			previo->sig=actual->sig;
-			free(actual);
-			bandera=false;
-			break;
-		}else{
-			previo=actual;
-			actual=actual->sig;	
-		}
-		if(actual!=NULL){
-		printf("Id no existe");	
-		}
-	}
-	
-	
-	/*Empleado *actual, *previo;
-	bool bandera=true;
-	int id = 0,i=1; //i = 1;
+void borrarID(){//CHECAR
+	Empleado *actual, *previo;
+	int id;
+	cout<<endl<<endl;
 	if(primero==NULL){
-		cout<<"No hay elementos en la lista"<<endl;
+		cout<<"No hay elementos en la lista";
 	}else{
-		id = validaEntero("Id a borrar: ");
-		//previo=actual;
-		if(id==primero->idEmpleado){
-			borrarPrimero();
-		}
-		else{
-			actual=primero;
-			while(actual!=NULL && actual->idEmpleado!=id){
-					previo=actual;
-					actual=actual->sig;
-			}
-			if(actual!=NULL){
-				previo->sig=actual;
-				if(actual==ultimo) ultimo =previo;
-				free(actual);
-			}
-		}
-		getchar();
-	}*/
-
-}
-void modificarId(){
-	Empleado *actual=primero, *previo;
-	bool bandera=true;
-	int id = 0,i=1; //i = 1;
-	id = validaEntero("Id a borrar: ");
-	while(actual!=NULL){
-		if(id==actual->idEmpleado){
-			previo->sig=actual->sig;
-			free(actual);
-			bandera=false;
-			break;
+		id = validaEntero("Id a eliminar: ");
+		if(id==primero->idEmpleado){  
+			borrarPrimero(primero); 
 		}else{
-			previo=actual;
-			actual=actual->sig;	
-		}
-		if(actual!=NULL){
-		printf("Id no existe");	
+			actual = primero;
+			while(actual != NULL && actual->idEmpleado != id){ 
+				previo=actual;
+				actual=actual->sig;
+			}
+			if(actual != NULL){
+				previo->sig=actual->sig;
+				if(actual==ultimo){
+					ultimo=previo;
+					free(actual);
+				}
+			}
 		}
 	}
 }
-void mostrar_lista(Empleado *primero){
+void actualizarDato(Empleado *primero){//CHECAR
+	Empleado *actual = new Empleado;
+	int s = 0, m = 0, id = 0;
+	cout<<endl<<endl;
+	s = validaEntero("Desea modificar alg?n dato? 1..SI, otro..NO: ");
+	while(s==1){
+		//mostrar_lista(primero);
+		cout<<endl<<endl;
+		id = validaEntero("Ingrese el ID del Empleado: ");
+		bool bandera = true;
+		while(bandera){
+			struct Empleado *auxiliar = primero;
+			while(auxiliar!=NULL){
+				if(id != auxiliar->idEmpleado){
+					auxiliar = auxiliar->sig;
+					bandera = false;
+				}else{
+					bandera = true;
+					m = validaEntero("?Que desea modificar, 1..PUESTO, otro..SALARIO: ");
+					if(m==1){
+						cout<<"Modifica el nuevo puesto: ";
+						cin>>auxiliar->puesto;
+					}else{
+						auxiliar->salario = validaFlotante("Nuevo salario: ");
+					}
+					break;
+				}
+			}
+			if(bandera==false){
+				cout<<endl<<"El id no existe"<<endl;
+			}else{
+				bandera=false;
+				s=2;
+			}
+		}
+		s = validaEntero("Desea modificar otro dato? 1..SI, otro..NO: ");
+	}
+}
+
+void ordenaSeleccion(Empleado *primero){//listo
+	Empleado *aux =primero;
+	Empleado *actual,*min;
+	Empleado *pivote1 =new Empleado;
+	Empleado *pivote2 =new Empleado;
+	while(aux != NULL){
+		min = aux;
+		actual = aux->sig;
+		while(actual != NULL){
+			if(min->idEmpleado > actual->idEmpleado){
+				min=actual;
+			}
+			actual=actual->sig;
+		}
+		pivote1->idEmpleado=aux->idEmpleado;
+		pivote1->nombre=aux->nombre;
+		pivote1->puesto=aux->puesto;
+		pivote1->salario=aux->salario;
+		
+		pivote2->idEmpleado=min->idEmpleado;
+		pivote2->nombre=min->nombre;
+		pivote2->puesto=min->puesto;
+		pivote2->salario=min->salario;
+		
+		min->idEmpleado=pivote1->idEmpleado;
+		min->nombre=pivote1->nombre;
+		min->puesto=pivote1->puesto;
+		min->salario=pivote1->salario;
+		
+		aux->idEmpleado=pivote2->idEmpleado;
+		aux->nombre=pivote2->nombre;
+		aux->puesto=pivote2->puesto;
+		aux->salario=pivote2->salario;
+		
+		aux=aux->sig;
+	}
+}
+
+void mostrar_lista(Empleado *primero){//Listo?
 	struct Empleado *auxiliar = primero; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
 	cout << endl << "Mostrando la lista completa: " << endl;
 	cout << "Ubicacion: " << setw(10);
@@ -213,7 +258,7 @@ void mostrar_lista(Empleado *primero){
 	cout << endl << "ULTIMO NODO: " << ultimo;
 }
 
-void mostrarListas(){
+void mostrarListas(){//listo?
 	system("cls");
 	cout << endl<< endl;
 	struct Listas *aux = primLista; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
@@ -236,19 +281,11 @@ void mostrarListas(){
 		aux = aux->sig;
 	}
 }
-/*
-AGREGAR MODIFICACIONES
-imprime las listas
-en que nodo
-que informacion quiere modificar
-*/
 void agregarLista(){
 	Listas *nuevo = new Listas;
-	int sigue = 1,sigue2=1;
-	
+	int sigue = 1,sigue2=1,opc=0,op=0;
 	primero = NULL;
 	ultimo = NULL;
-
 		cout << endl << "OPCIONES";
 		cout << endl << "1-. Agregar inicio";
 		cout << endl << "2-. Agregar final";
@@ -288,15 +325,15 @@ void agregarLista(){
 			op=validaEntero("Escribe tu opcion: ");
 			switch(op){
 				case 1: 
-					borrarPrimero();
+					borrarPrimero(primero);
 					mostrar_lista(primero);
 				break;
 				case 2: 
-					borrarUltimo();
+					borrarUltimo(primero);
 					mostrar_lista(primero);
 				break;
 				case 3: 
-					borrarPosicion();
+					borrarPosicion(primero);
 					mostrar_lista(primero);
 				break;
 				case 4:
@@ -309,6 +346,16 @@ void agregarLista(){
 				break;
 			}
 			sigue = validaEntero("Teclea 1 para seguir borrando: ");
+		}
+	}
+	ordenaSeleccion(primero);
+	mostrar_lista(primero);
+	sigue=1;
+	opc = validaEntero("Desea borrar alg?n NODO?  1..SI, otro..NO: ");
+	if(opc==1){
+		while(sigue==1){
+			borrarPosicion(primero);
+			sigue=validaEntero("Teclea 1 para borrar otro: ");
 		}
 	}
 	nuevo->sig = NULL;

@@ -1,7 +1,6 @@
 Empleado *registro(){
 	Empleado *nuevo = new Empleado; //se puede omitir el struct
 	bool bandera = true;
-	
 	while(bandera){
 		nuevo->idEmpleado = validaEntero("\nidEmpleado: ");
 		if(unico != 0){
@@ -29,6 +28,33 @@ Empleado *registro(){
 	unico=1;
 	return nuevo;
 }
+/*void createFile(){
+	Empleado *actual = new Empleado;//variable para irnos moviendo
+	//LUGARES
+	FILE *datos;
+	datos = fopen( "listas.txt", "r" );
+	fseek( datos, 0, SEEK_END );
+	if (ftell( datos ) == 0 ){
+	  datos=registro();
+	}
+	if(!(arch=fopen("listas.txt", "w"))){//problemas con el archivo
+		printf("ERROR - no se ha podido crear el archivo listas.txt ");
+		exit(1);
+	}//n = tamano de listas
+	if(arch=fopen("listas.txt","w")==0){
+		
+	}
+	struct Empleado *auxiliar = primero;//saber el inicio de la lista
+	while(auxiliar!=NULL){
+		fprintf(arch, "%d\t", actual->idEmpleado);
+		fprintf(arch, "%s\t", actual->nombre);
+		fprintf(arch, "%s\t", actual->puesto);
+		fprintf(arch, "%f\t", actual->salario);
+		actual->sig=NULL;
+	}
+	fclose(arch);
+	return actual;
+}*/
 void agregarFinal(){ //ya funciona
 	Empleado *nuevo = registro();
 	if(primero == NULL){
@@ -54,7 +80,7 @@ void agregarPosicion(){ //ya funciona
 	bool bandera=true;
 	int pos = 0;
 	int i = 1;
-	pos = validaEntero("Posición: ");
+	pos = validaEntero("Posiciï¿½n: ");
 	if(pos==1){
 		agregarInicio();
 		getchar();
@@ -72,7 +98,7 @@ void agregarPosicion(){ //ya funciona
 			}
 		}
 		if(bandera){
-			cout<<"La posición NO existe, el nodo se agrega al final de la lista"<<endl;
+			cout<<"La posiciï¿½n NO existe, el nodo se agrega al final de la lista"<<endl;
 			agregarFinal();
 		}
 	}
@@ -86,7 +112,7 @@ void eliminarPosicion(){
 	if(primero == NULL){
 		cout<<"No hay elementos en la lista";
 	}else{
-		pos = validaEntero("Posición a borrar: ");
+		pos = validaEntero("Posicion a borrar: ");
 		if(pos == 1){
 			borrarPrimero();
 		}else{
@@ -133,9 +159,48 @@ void borrarId(){
 		}
 	}
 }
+void actualizarDato(){
+	Empleado *actual = new Empleado;
+	int s = 0, m = 0, id = 0;
+	cout<<endl<<endl;
+	s = validaEntero("Desea modificar algun dato? 1..SI, otro..NO: ");
+	while(s==1){
+		//mostrar_lista(primero);
+		cout<<endl<<endl;
+		id = validaEntero("Ingrese el ID del Empleado: ");
+		bool bandera = true;
+		while(bandera){
+			struct Empleado *auxiliar = primero;
+			while(auxiliar!=NULL){
+				if(id != auxiliar->idEmpleado){
+					auxiliar = auxiliar->sig;
+					bandera = false;
+				}else{
+					bandera = true;
+					m = validaEntero("Que desea modificar? 1..PUESTO, otro..SALARIO: ");
+					if(m==1){
+						cout<<"Modifica el nuevo puesto: ";
+						cin>>auxiliar->puesto;
+					}else{
+						auxiliar->salario = validaFlotante("Nuevo salario: ");
+					}
+					break;
+				}
+			}
+			if(bandera==false){
+				cout<<endl<<"El id no existe"<<endl;
+			}else{
+				bandera=false;
+				s=2;
+			}
+		}
+		s = validaEntero("Desea modificar otro dato? 1..SI, otro..NO: ");
+	}
+}
+
 void agregar_elemento(){
 	//struct Empleado *nuevo = (struct Empleado*) malloc (sizeof(struct Empleado));
-	struct Empleado *nuevo = new Empleado; //al utilizar el string, se utiliza para almacenar la dirección de memoria
+	struct Empleado *nuevo = new Empleado; //al utilizar el string, se utiliza para almacenar la direcciï¿½n de memoria
 	if(nuevo==NULL){
 		cout<<"No hay memoria disponible"<<endl;
 	}else{
@@ -161,7 +226,7 @@ void mostrar_lista(Empleado *primero){
 	system("cls");
 	cout<<endl;
 	cout<<"Mostrando la lista completa"<<endl;
-	cout<<"Ubicación"<<setw(10);
+	cout<<"Ubicaciï¿½n"<<setw(10);
 	cout<<"idEmpleado"<<setw(10);
 	cout<<"Nombre"<<setw(10);
 	cout<<"Puesto"<<setw(10);
@@ -174,49 +239,11 @@ void mostrar_lista(Empleado *primero){
 		cout<<auxiliar->nombre<<setw(10);
 		cout<<auxiliar->puesto<<setw(10);
 		cout<<auxiliar->salario<<setw(10);
-		//No es necesario, es importante para comprender que se guarda la memoria del siguiente nodo (referencia a la siguiente línea)
+		//No es necesario, es importante para comprender que se guarda la memoria del siguiente nodo (referencia a la siguiente lï¿½nea)
 		cout<<auxiliar->sig<<endl;
 		auxiliar = auxiliar->sig;
 	}
 	
 	cout<<endl<<"Primer NODO: "<<primero;
-	cout<<endl<<"Último NODO: "<<ultimo;
-}
-void actualizarDato(){
-	Empleado *actual = new Empleado;
-	int s = 0, m = 0, id = 0;
-	cout<<endl<<endl;
-	s = validaEntero("Desea modificar algún dato? 1..SI, otro..NO: ");
-	while(s==1){
-		//mostrar_lista(primero);
-		cout<<endl<<endl;
-		id = validaEntero("Ingrese el ID del Empleado: ");
-		bool bandera = true;
-		while(bandera){
-			struct Empleado *auxiliar = primero;
-			while(auxiliar!=NULL){
-				if(id != auxiliar->idEmpleado){
-					auxiliar = auxiliar->sig;
-					bandera = false;
-				}else{
-					bandera = true;
-					m = validaEntero("¿Que desea modificar, 1..PUESTO, otro..SALARIO: ");
-					if(m==1){
-						cout<<"Modifica el nuevo puesto: ";
-						cin>>auxiliar->puesto;
-					}else{
-						auxiliar->salario = validaFlotante("Nuevo salario: ");
-					}
-					break;
-				}
-			}
-			if(bandera==false){
-				cout<<endl<<"El id no existe"<<endl;
-			}else{
-				bandera=false;
-				s=2;
-			}
-		}
-		s = validaEntero("Desea modificar otro dato? 1..SI, otro..NO: ");
-	}
+	cout<<endl<<"ï¿½ltimo NODO: "<<ultimo;
 }

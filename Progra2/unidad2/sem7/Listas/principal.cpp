@@ -1,15 +1,10 @@
 #include "libreria.h"
-//Saúl Cervantes Candia - 177927
-//Programación 2
-//Hora clase 09:00 - 10:00 am
-//Grupo T13B
-//Listas
+//Ana Karen Cuenca Esquivel -177932
+//Programación 2 - Grupo T13B LISTAS SIMPLES
 int main(){
-	//setlocale(LC_CTYPE, "Spanish");
-	SetConsoleCP(1252); //STDIN codificación de windows 1252
-	SetConsoleOutputCP(1252); //STDOUT
+	SetConsoleCP(1252);
+	SetConsoleOutputCP(1252);
 	int sigue = 1;
-	
 	primero = NULL;
 	ultimo = NULL;
 	

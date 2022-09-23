@@ -30,5 +30,9 @@ struct Listas{
 	Listas *sig;//GUARDA EL SIGUIENTE NODO
 }*primLista,*ultLista;//sin flechas
 int unico =0;
-#include "vali.h"
+
+#include "validacion.h"
+#include "borrar.h"
+#include "archivo.h"
 #include "funciones.h"
+
