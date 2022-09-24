@@ -1,5 +1,5 @@
 Empleado *registro(){
-	Empleado *nuevo = new Empleado;
+	/*Empleado *nuevo = new Empleado;
 	bool bandera = true;
 	
 	while(bandera){
@@ -21,45 +21,31 @@ Empleado *registro(){
 		}
 	}
 	cout << "Nombre: ";
-	//cin >> nuevo->nombre;
-	getline(cin,nuevo->nombre);
+	cin >> nuevo->nombre;
 	cout << "Puesto: ";
-	//cin >> nuevo->puesto;
-	getline(cin,nuevo->puesto);
+	cin >> nuevo->puesto;
 	nuevo->salario = validaFlotante("Salario: ");
 	nuevo->sig = NULL;
 	unico=1;
 	bandera=true;
+	return nuevo;*/
+	Empleado *nuevo = new Empleado;
+	cout<<endl;
+	nuevo->idEmpleado= validaEntero("idEmpleado: ");
+	cout<<"Nombre: ";
+	getline(cin,nuevo->nombre);
+	cout<<"Puesto: ";
+	getline(cin, nuevo->puesto);
+	nuevo->salario = validaFlotante("Salario: ");
+	nuevo->sig=NULL;
 	return nuevo;
 }
-void mostrar_lista(Empleado *primero){  //quitar el argumento en el proyecto de lista, tambien modificar para actualizar los datos
-	struct Empleado *auxiliar = primero; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
-	cout << endl << endl;
-	cout << "Mostrando la lista completa" << endl;
-	cout << "Ubicaci?n" << setw(10);
-	cout << "IdEmpleado" << setw(10);
-	cout << "Nombre" << setw(10);
-	cout << "Puesto" << setw(10);
-	cout << "Salario" << setw(10);
-	cout << "Siguiente" << endl;
-	while(auxiliar != NULL){
-		cout << auxiliar << setw(10);
-		cout << auxiliar->idEmpleado << setw(10);
-		cout << auxiliar->nombre << setw(10);
-		cout << auxiliar->puesto << setw(10);
-		cout << auxiliar->salario << setw(10);
-		cout << auxiliar->sig << endl; // No es necesario escribir esto en los c?digos, pero es importante comprender que se est? guardando la memoria del siguiente nodo dentro de las listas generadas a lo largo de nuestro c?digo y la creaci?n de nodos en el ejercicio
-		ultimo = auxiliar;
-		auxiliar = auxiliar->sig;
-	}
-	cout << endl << "PRIMER NODO: " << primero;
-	cout << endl << "ULTIMO NODO: " << ultimo;
-}
+
 void actualizarDato(Empleado *primero){
 	Empleado *actual = new Empleado;
 	int s = 0, m = 0, id = 0;
 	cout<<endl<<endl;
-	s = validaEntero("Desea modificar alg?n dato? 1..SI, otro..NO: ");
+	s = validaEntero("Desea modificar alg�n dato? 1..SI, otro..NO: ");
 	while(s==1){
 		//mostrar_lista(primero);
 		cout<<endl<<endl;
@@ -73,7 +59,7 @@ void actualizarDato(Empleado *primero){
 					bandera = false;
 				}else{
 					bandera = true;
-					m = validaEntero("?Que desea modificar, 1..PUESTO, otro..SALARIO: ");
+					m = validaEntero("�Que desea modificar, 1..PUESTO, otro..SALARIO: ");
 					if(m==1){
 						cout<<"Modifica el nuevo puesto: ";
 						cin>>auxiliar->puesto;
@@ -94,6 +80,16 @@ void actualizarDato(Empleado *primero){
 	}
 }
 
+void agregarFinal(){ //ya funciona
+	Empleado *nuevo = registro();
+	if(primero == NULL){
+		primero = nuevo;
+		ultimo = nuevo;
+	}else{
+		ultimo->sig = nuevo;
+		ultimo = nuevo;
+	}
+}
 void agregarInicio(){ //ya funciona
 	Empleado *nuevo = registro();
 	if(primero == NULL){
@@ -109,7 +105,7 @@ void agregarPosicion(){ //ya funciona
 	bool bandera=true;
 	int pos = 0;
 	int i = 1;
-	pos = validaEntero("Posicion: ");
+	pos = validaEntero("Posici�n: ");
 	if(pos==1){
 		agregarInicio();
 		getchar();
@@ -127,37 +123,20 @@ void agregarPosicion(){ //ya funciona
 			}
 		}
 		if(bandera){
-			cout<<"La posici?n NO existe, el nodo se agrega al final de la lista"<<endl;
+			cout<<"La posici�n NO existe, el nodo se agrega al final de la lista"<<endl;
 		}
 	}
 	getchar();
 }
-void borrarPrimero(Empleado *primero){
-	Empleado *tem = primero;
-	primero = primero->sig;
-	free(tem);
-}
-void borrarUltimo(Empleado *primero){
+int eliminarPosicion(Empleado *primero, int pos){ //agregar para que funcione en listas de listas
 	Empleado *actual, *previo;
-	actual = primero;
-	while(actual != ultimo){
-		previo = actual;
-		actual = actual->sig;
-	}
-	previo->sig = NULL;
-	ultimo = previo;
-	free(actual);
-}
-
-void eliminarPosicion(Empleado *primero){ //agregar para que funcione en listas de listas
-	Empleado *actual, *previo;
-	int pos = 0;
+	pos = 0;
 	int i = 0;
 	cout<<endl<<endl;
 	if(primero == NULL){
 		cout<<"No hay elementos en la lista";
 	}else{
-		pos = validaEntero("Posicion a borrar: ");
+		pos = validaEntero("Posici�n a borrar: ");
 		if(pos == 1){
 			borrarPrimero(primero);
 		}else{
@@ -177,6 +156,7 @@ void eliminarPosicion(Empleado *primero){ //agregar para que funcione en listas 
 		}
 	}
     getchar();
+    return pos;
 }
 void borrarId(Empleado *primero){ //agregar para que funcione en listas de listas
 	Empleado *actual, *previo;
@@ -190,11 +170,11 @@ void borrarId(Empleado *primero){ //agregar para que funcione en listas de lista
 			borrarPrimero(primero); 
 		}else{
 			actual = primero;
-			while(actual != NULL && actual->idEmpleado != id){ 
+			while(actual != NULL && actual->idEmpleado!=id){ 
 				previo=actual;
 				actual=actual->sig;
 			}
-			if(actual != NULL){
+			if(actual!=NULL){
 				previo->sig=actual->sig;
 				if(actual==ultimo){
 					ultimo=previo;
@@ -204,55 +184,40 @@ void borrarId(Empleado *primero){ //agregar para que funcione en listas de lista
 		}
 	}
 }
-void ordenaSeleccion(Empleado *primero){
-	Empleado *aux =primero;
-	Empleado *actual,*min;
-	Empleado *pivote1 =new Empleado;
-	Empleado *pivote2 =new Empleado;
-	while(aux != NULL){
-		min = aux;
-		actual = aux->sig;
-		while(actual != NULL){
-			if(min->idEmpleado > actual->idEmpleado){
-				min=actual;
-			}
-			actual=actual->sig;
-		}
-		pivote1->idEmpleado=aux->idEmpleado;
-		pivote1->nombre=aux->nombre;
-		pivote1->puesto=aux->puesto;
-		pivote1->salario=aux->salario;
-		
-		pivote2->idEmpleado=min->idEmpleado;
-		pivote2->nombre=min->nombre;
-		pivote2->puesto=min->puesto;
-		pivote2->salario=min->salario;
-		
-		min->idEmpleado=pivote1->idEmpleado;
-		min->nombre=pivote1->nombre;
-		min->puesto=pivote1->puesto;
-		min->salario=pivote1->salario;
-		
-		aux->idEmpleado=pivote2->idEmpleado;
-		aux->nombre=pivote2->nombre;
-		aux->puesto=pivote2->puesto;
-		aux->salario=pivote2->salario;
-		
-		aux=aux->sig;
+void mostrar_lista(Empleado *primero){  //quitar el argumento en el proyecto de lista, tambien modificar para actualizar los datos
+	struct Empleado *auxiliar = primero; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
+	cout << endl << endl;
+	cout << "Mostrando la lista completa" << endl;
+	cout << "Ubicaci�n" << setw(10);
+	cout << "IdEmpleado" << setw(10);
+	cout << "Nombre" << setw(10);
+	cout << "Puesto" << setw(10);
+	cout << "Salario" << setw(10);
+	cout << "Siguiente" << endl;
+	while(auxiliar != NULL){
+		cout << auxiliar << setw(10);
+		cout << auxiliar->idEmpleado << setw(10);
+		cout << auxiliar->nombre << setw(10);
+		cout << auxiliar->puesto << setw(10);
+		cout << auxiliar->salario << setw(10);
+		cout << auxiliar->sig << endl; // No es necesario escribir esto en los c�digos, pero es importante comprender que se est� guardando la memoria del siguiente nodo dentro de las listas generadas a lo largo de nuestro c�digo y la creaci�n de nodos en el ejercicio
+		ultimo = auxiliar;
+		auxiliar = auxiliar->sig;
 	}
+	cout << endl << "PRIMER NODO: " << primero;
+	cout << endl << "ULTIMO NODO: " << ultimo;
 }
-
 void mostrarListas(){
 	system("cls");
 	struct Listas *aux = primLista; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
-	cout << "Ubicacion Lista" << setw(20);
+	cout << "Ubicaci�n Lista" << setw(20);
 	cout << "Lista (primer nodo)" << setw(20);
 	cout << "Siguiente" << endl;
 	
 	while(aux != NULL){
 		cout << aux << setw(20);
 		cout << aux->lista << setw(20);
-		cout << aux->sig << endl; // No es necesario escribir esto en los c?digos, pero es importante comprender que se est? guardando la memoria del siguiente nodo dentro de las listas generadas a lo largo de nuestro c?digo y la creaci?n de nodos en el ejercicio
+		cout << aux->sig << endl; // No es necesario escribir esto en los c�digos, pero es importante comprender que se est� guardando la memoria del siguiente nodo dentro de las listas generadas a lo largo de nuestro c�digo y la creaci�n de nodos en el ejercicio
 		aux = aux->sig;
 	}
 	cout << endl << "PRIMER LISTA: " << primLista;
@@ -260,7 +225,8 @@ void mostrarListas(){
 	
 	aux = primLista;
 	while(aux != NULL){
-		mostrar_lista(aux->lista); //no es necesario most
+		ordenaSeleccion(aux->lista);
+		mostrar_lista(aux->lista); //no es necesario mostrar la lista
 		aux = aux->sig;
 	}
 }
@@ -270,35 +236,24 @@ void agregarLista(){
 	
 	primero = NULL;
 	ultimo = NULL;
-	
-	/*while(sigue == 1 ){
+	/*
+	while(sigue == 1 ){
 		agregarInicio();
-		agregarFinal();
-		agregarPosicion();
 		cout<<endl<<endl;
 		sigue = validaEntero("Teclea 1 para agregar otro: ");
 	}
-	mostrar_lista(primero);
-	ordenaSeleccion(primero);
+	mostrar_lista(primero);*/
+	
+	/*mostrar_lista(primero);
+	ordenaSeleccion(primero)
 	archivoEscritura(primero);*/
-	//cout<<endl<<"Mostrando Lista Ordenada"<<endl;
-	ordenaSeleccion(primero);
+	primero = archivoLectura();
 	mostrar_lista(primero);
-	sigue=1;
-	opc = validaEntero("Desea borrar alg?n NODO?  1..SI, otro..NO: ");
-	if(opc==1){
-		while(sigue==1){
-			eliminarPosicion(primero);
-			sigue=validaEntero("Teclea 1 para borrar otro: ");
-		}
-	}
-	//primero = archivoLectura();
-	mostrar_lista(primero);
-	borrarUltimo(primero);
+	agregarFinal();
 	ordenaSeleccion(primero);
 	mostrar_lista(primero);
 	archivoEscritura(primero);
-	
+
 	nuevo->sig = NULL;
 	nuevo->lista = primero;
 	
@@ -313,12 +268,13 @@ void agregarLista(){
 	}
 }
 void buscarLista(){
-	Empleado *nLista = primero;
 	int cont, lista, sigue;
 	cout<<endl<<endl;
 	sigue = validaEntero("Desea modificar alguna lista? 1..SI, otro..NO:  ");
 	while(sigue==1){
-		struct Listas *aux = primLista; 
+		struct Listas *aux = primLista;
+		Empleado *nLista = primero; 
+		Empleado *guardar;
 		bool bandera=false;
 		cont=0;
 		cout<<endl<<endl;
@@ -332,20 +288,39 @@ void buscarLista(){
 			aux = aux->sig;
 		}
 		if(bandera==true){
+			
 			mostrar_lista(nLista); //no es necesario most
+			guardar = primero->sig;
 			borrarPrimero(nLista);
+			nLista = guardar;
+			guardar = primero->sig;
 			mostrar_lista(nLista);
 			
 			borrarUltimo(nLista);
 			mostrar_lista(nLista);
 			
-			eliminarPosicion(nLista);  //primero
+			int pos = 0;
+			eliminarPosicion(nLista,pos);  //primero
+			if(pos==1){
+				nLista = guardar;
+				guardar = primero->sig;
+			}
 			mostrar_lista(nLista);
 			
-			eliminarPosicion(nLista);  //ultimo
+			pos = 0;
+			eliminarPosicion(nLista,pos);  //ultimo
+			if(pos==1){
+				nLista = guardar;
+				guardar = primero->sig;
+			}
 			mostrar_lista(nLista);
 			
-			eliminarPosicion(nLista);  //interno
+			pos = 0;
+			eliminarPosicion(nLista,pos);  //interno
+			if(pos==1){
+				nLista = guardar;
+				guardar = primero->sig;
+			}
 			mostrar_lista(nLista);
 			
 			borrarId(nLista);  //primer
@@ -366,4 +341,3 @@ void buscarLista(){
 		sigue = validaEntero("Desea modificar otra lista? 1..SI, otro..NO: ");
 	}
 }
-

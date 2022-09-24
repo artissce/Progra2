@@ -14,31 +14,22 @@ int main(){
 		sigue = validaEntero("Teclea 1 para agregar otro: ");
 	}
 	mostrar_lista(primero);
-	
 	borrarPrimero();
 	mostrar_lista(primero);
-	
 	borrarUltimo();
 	mostrar_lista(primero);
-	
-	eliminarPosicion();  //primero
+	eliminarPosicion();  
 	mostrar_lista(primero);
-	
-	eliminarPosicion();  //ultimo
+	eliminarPosicion();  
 	mostrar_lista(primero);
-	
-	eliminarPosicion();  //interno
+	eliminarPosicion(); 
 	mostrar_lista(primero);
-	
-	borrarId();  //primer
+	borrarId(); 
 	mostrar_lista(primero);
-	
-	borrarId();  //ultimo
+	borrarId();  
 	mostrar_lista(primero);
-	
-	borrarId();  //interno
+	borrarId();
 	mostrar_lista(primero);
-	
 	actualizarDato();
 	mostrar_lista(primero);
 	return 0;

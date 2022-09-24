@@ -44,20 +44,17 @@ Empleado *registro()
 	      unico = 1;
 	      return nuevo;
 }
-void agregarFinal()
-{ // ya funciona
-	      Empleado *nuevo = registro();
-	      if (primero == NULL)
+void agregarFinal(){ // ya funciona
+     Empleado *nuevo = registro();
+	 if (primero == NULL)
 	{
-		            primero = nuevo;
-		            ultimo = nuevo;
-		      
+       primero = nuevo;
+       ultimo = nuevo;		      
 	}
 	else
 	{
-		            ultimo->sig = nuevo;
-		            ultimo = nuevo;
-		      
+       ultimo->sig = nuevo;
+       ultimo = nuevo;
 	}
 }
 void agregarInicio()
