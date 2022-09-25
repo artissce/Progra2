@@ -30,14 +30,34 @@ Empleado *registro(){
 	bandera=true;
 	return nuevo;*/
 	Empleado *nuevo = new Empleado;
-	cout<<endl;
-	nuevo->idEmpleado= validaEntero("idEmpleado: ");
+	bool bandera = true;
+	while(bandera){
+		nuevo->idEmpleado = validaEntero("\n\nidEmpleado: ");
+		if(unico != 0){
+			struct Empleado *auxiliar = primero;
+			while(auxiliar!=NULL){
+				if(nuevo->idEmpleado != auxiliar->idEmpleado){
+					auxiliar = auxiliar->sig;
+					bandera = false;
+				}else{
+					cout<<"El ID ya existe"<<endl;
+					bandera = true;
+					break;
+				}
+			}
+		}else{
+			bandera=false;
+		}
+	}
+	//nuevo->idEmpleado= validaEntero("idEmpleado: ");
 	cout<<"Nombre: ";
 	getline(cin,nuevo->nombre);
 	cout<<"Puesto: ";
 	getline(cin, nuevo->puesto);
 	nuevo->salario = validaFlotante("Salario: ");
 	nuevo->sig=NULL;
+	unico=1;
+	bandera=true;
 	return nuevo;
 }
 
@@ -45,7 +65,7 @@ void actualizarDato(Empleado *primero){
 	Empleado *actual = new Empleado;
 	int s = 0, m = 0, id = 0;
 	cout<<endl<<endl;
-	s = validaEntero("Desea modificar alg�n dato? 1..SI, otro..NO: ");
+	s = validaEntero("Desea modificar algun dato? 1..SI, otro..NO: ");
 	while(s==1){
 		//mostrar_lista(primero);
 		cout<<endl<<endl;
@@ -59,7 +79,7 @@ void actualizarDato(Empleado *primero){
 					bandera = false;
 				}else{
 					bandera = true;
-					m = validaEntero("�Que desea modificar, 1..PUESTO, otro..SALARIO: ");
+					m = validaEntero("Que desea modificar, 1..PUESTO, otro..SALARIO: ");
 					if(m==1){
 						cout<<"Modifica el nuevo puesto: ";
 						cin>>auxiliar->puesto;
@@ -105,7 +125,7 @@ void agregarPosicion(){ //ya funciona
 	bool bandera=true;
 	int pos = 0;
 	int i = 1;
-	pos = validaEntero("Posici�n: ");
+	pos = validaEntero("Posicion: ");
 	if(pos==1){
 		agregarInicio();
 		getchar();
@@ -123,7 +143,7 @@ void agregarPosicion(){ //ya funciona
 			}
 		}
 		if(bandera){
-			cout<<"La posici�n NO existe, el nodo se agrega al final de la lista"<<endl;
+			cout<<"La posicion NO existe, el nodo se agrega al final de la lista"<<endl;
 		}
 	}
 	getchar();
@@ -188,7 +208,7 @@ void mostrar_lista(Empleado *primero){  //quitar el argumento en el proyecto de 
 	struct Empleado *auxiliar = primero; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
 	cout << endl << endl;
 	cout << "Mostrando la lista completa" << endl;
-	cout << "Ubicaci�n" << setw(10);
+	cout << "Ubicacion" << setw(10);
 	cout << "IdEmpleado" << setw(10);
 	cout << "Nombre" << setw(10);
 	cout << "Puesto" << setw(10);
@@ -210,7 +230,7 @@ void mostrar_lista(Empleado *primero){  //quitar el argumento en el proyecto de 
 void mostrarListas(){
 	system("cls");
 	struct Listas *aux = primLista; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
-	cout << "Ubicaci�n Lista" << setw(20);
+	cout << "Ubicacion Lista" << setw(20);
 	cout << "Lista (primer nodo)" << setw(20);
 	cout << "Siguiente" << endl;
 	
@@ -230,26 +250,25 @@ void mostrarListas(){
 		aux = aux->sig;
 	}
 }
+
+
 void agregarLista(){
 	Listas *nuevo = new Listas;
-	int sigue = 1, opc=0, op=0;
+	int sigue=1, bornod=0, borid=0;
 	
-	primero = NULL;
-	ultimo = NULL;
-	/*
-	while(sigue == 1 ){
-		agregarInicio();
-		cout<<endl<<endl;
-		sigue = validaEntero("Teclea 1 para agregar otro: ");
-	}
-	mostrar_lista(primero);*/
 	
-	/*mostrar_lista(primero);
-	ordenaSeleccion(primero)
-	archivoEscritura(primero);*/
+	
+	primero=NULL;
+	ultimo=NULL;
+	
 	primero = archivoLectura();
-	mostrar_lista(primero);
-	agregarFinal();
+	
+	while(sigue==1){
+		agregarInicio();
+		mostrar_lista(primero);
+		sigue = validaEntero("\nTecla 1 para agregar otro: ");
+	}
+//	agregarFinal();
 	ordenaSeleccion(primero);
 	mostrar_lista(primero);
 	archivoEscritura(primero);
@@ -257,15 +276,14 @@ void agregarLista(){
 	nuevo->sig = NULL;
 	nuevo->lista = primero;
 	
-	//agregar las funciones
-	
-	if(primLista == NULL){
-		primLista = nuevo;
-		ultLista = nuevo;
+	if(primLista==NULL){
+		primLista=nuevo;
+		ultLista=nuevo;
 	}else{
 		ultLista->sig=nuevo;
-		ultLista = nuevo;
+		ultLista=nuevo;	
 	}
+	
 }
 void buscarLista(){
 	int cont, lista, sigue;

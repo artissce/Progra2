@@ -46,3 +46,4 @@ Empleado *archivoLectura(){
 	arch.close();
 	return primero;
 }
+

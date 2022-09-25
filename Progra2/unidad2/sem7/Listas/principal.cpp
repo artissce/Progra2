@@ -8,11 +8,16 @@ int main(){
 	primero = NULL;
 	ultimo = NULL;
 	
+	primero=archivoLectura();
 	while(sigue==1){
 		agregarInicio();
 		//agregar_elemento();
 		sigue = validaEntero("Teclea 1 para agregar otro: ");
 	}
+	ordenaSeleccion(primero);
+	mostrar_lista(primero);
+	archivoEscritura(primero);
+	
 	mostrar_lista(primero);
 	borrarPrimero();
 	mostrar_lista(primero);

@@ -4,6 +4,14 @@
 #include <locale.h> //setlocale
 #include <windows.h> //SetConsole
 #include <string> //string
+#include <fstream> //para ifstream
+#include <stdio.h>//
+#include <time.h>//
+#include <conio.h>//
+#include <ctype.h>//
+#include <string.h>//
+#include <istream>
+#include <sstream>
 using namespace std;
 
 FILE *arch = NULL;
@@ -21,5 +29,6 @@ int unico = 0;
 
 #include "validacion.h"
 #include "borrar.h"
+#include "archivo.h"
 #include "funciones.h"
 
