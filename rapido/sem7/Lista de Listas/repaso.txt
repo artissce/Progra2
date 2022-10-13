@@ -1,0 +1,3 @@
+el auxiliar siempre guarda la direccion del primer registro
+aux=primero
+se actualiza el auxiliar en el siguiente nodo (aux=aux->sig)
