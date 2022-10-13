@@ -12,69 +12,7 @@ Empleado *registro(){
 	nuevo->salario=validaFlotante("Salario: ");
 	nuevo->sig=NULL;
 	return nuevo;
-}/*Empleado *registro(){
-	/*Empleado *nuevo = new Empleado;
-	bool bandera = true;
-	
-	while(bandera){
-		nuevo->idEmpleado = validaEntero("\nidEmpleado: ");
-		if(unico != 0){
-			struct Empleado *auxiliar = primero;
-			while(auxiliar!=NULL){
-				if(nuevo->idEmpleado != auxiliar->idEmpleado){
-					auxiliar = auxiliar->sig;
-					bandera = false;
-				}else{
-					cout<<"El ID ya existe"<<endl;
-					bandera = true;
-					break;
-				}
-			}
-		}else{
-			bandera=false;
-		}
-	}
-	cout << "Nombre: ";
-	cin >> nuevo->nombre;
-	cout << "Puesto: ";
-	cin >> nuevo->puesto;
-	nuevo->salario = validaFlotante("Salario: ");
-	nuevo->sig = NULL;
-	unico=1;
-	bandera=true;
-	return nuevo;//
-	Empleado *nuevo = new Empleado;
-	bool bandera = true;
-	while(bandera){
-		nuevo->idEmpleado = validaEntero("\n\nidEmpleado: ");
-		if(unico != 0){
-			struct Empleado *auxiliar = primero;
-			while(auxiliar!=NULL){
-				if(nuevo->idEmpleado != auxiliar->idEmpleado){
-					auxiliar = auxiliar->sig;
-					bandera = false;
-				}else{
-					cout<<"El ID ya existe"<<endl;
-					bandera = true;
-					break;
-				}
-			}
-		}else{
-			bandera=false;
-		}
-	}
-	//nuevo->idEmpleado= validaEntero("idEmpleado: ");
-	cout<<"Nombre: ";
-	getline(cin,nuevo->nombre);
-	cout<<"Puesto: ";
-	getline(cin, nuevo->puesto);
-	nuevo->salario = validaFlotante("Salario: ");
-	nuevo->sig=NULL;
-	unico=1;
-	bandera=true;
-	return nuevo;
-}*/
-
+}
 void actualizarDato(Empleado *primero){
 	Empleado *actual = new Empleado;
 	int s = 0, m = 0, id = 0;
@@ -164,62 +102,7 @@ void agregarPosicion(){ //ya funciona
 	}
 	getchar();
 }
-int eliminarPosicion(Empleado *primero, int pos){ //agregar para que funcione en listas de listas
-	Empleado *actual, *previo;
-	pos = 0;
-	int i = 0;
-	cout<<endl<<endl;
-	if(primero == NULL){
-		cout<<"No hay elementos en la lista";
-	}else{
-		pos = validaEntero("Posici�n a borrar: ");
-		if(pos == 1){
-			borrarPrimero(primero);
-		}else{
-			actual = primero;
-			while(actual != NULL && i != (pos-1)){
-				previo = actual;
-				actual = actual->sig;
-				i++;
-			}
-			if(actual != NULL){
-				previo->sig = actual->sig;
-				if(actual == ultimo){
-					ultimo = previo;
-					free(actual);
-				}
-			}
-		}
-	}
-    getchar();
-    return pos;
-}
-void borrarId(Empleado *primero){ //agregar para que funcione en listas de listas
-	Empleado *actual, *previo;
-	int id;
-	cout<<endl<<endl;
-	if(primero==NULL){
-		cout<<"No hay elementos en la lista";
-	}else{
-		id = validaEntero("Id a eliminar: ");
-		if(id==primero->idEmpleado){  
-			borrarPrimero(primero); 
-		}else{
-			actual = primero;
-			while(actual != NULL && actual->idEmpleado!=id){ 
-				previo=actual;
-				actual=actual->sig;
-			}
-			if(actual!=NULL){
-				previo->sig=actual->sig;
-				if(actual==ultimo){
-					ultimo=previo;
-					free(actual);
-				}
-			}
-		}
-	}
-}
+
 void mostrar_lista(Empleado *primero){  //quitar el argumento en el proyecto de lista, tambien modificar para actualizar los datos
 	struct Empleado *auxiliar = primero; //Saber por donde empezaremos asignando el valor del apuntador primero al apuntador auxiliar 
 	cout << endl << endl;
@@ -267,15 +150,16 @@ void mostrarListas(){
 	}
 }
 
-
 void agregarLista(){
 	Listas *nuevo = new Listas;
+	cout<<"Agregando lista a la LISTA"<<endl;
+	nuevo->idLista=validaEntero("id de la lista: ");
 	int sigue=1, bornod=0, borid=0;
 	
 	primero=NULL;
 	ultimo=NULL;
 	
-	primero = archivoLectura();
+	primero = archivoLectura(nuevo->idLista);
 	while(sigue==1){
 		agregarInicio();
 		mostrar_lista(primero);
@@ -285,7 +169,7 @@ void agregarLista(){
 //	agregarFinal();
 	ordenaSeleccion(primero);
 	mostrar_lista(primero);
-	archivoEscritura(primero);
+	archivoEscritura(primero,nuevo->idLista);
 
 	nuevo->sig = NULL;
 	nuevo->lista = primero;
@@ -371,6 +255,6 @@ void buscarLista(){
 		}
 		cout<<endl;
 		sigue = validaEntero("Desea modificar otra lista? 1..SI, otro..NO: ");
-		archivoEscritura(primero);
+		archivoEscritura(primero,aux->idLista);
 	}
 }

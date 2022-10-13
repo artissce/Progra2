@@ -1,7 +1,6 @@
 #include "libreria.h"
-//Sa�l Cervantes Candia - 177927
-//Programaci�n 2
-//Hora clase 09:00 - 10:00 am
+//Saul Cervantes Candia - 177927 Ana Karen Cuenca Esquivel - 177932
+//Programacion 2
 //Grupo T13B
 //Lista de listas
 int main(){
@@ -12,17 +11,19 @@ int main(){
 	
 	primLista = NULL;
 	ultLista = NULL;
+	lecturaLista();
+	getchar();
 	
+	//mostrarListas();
 	while(sigue==1){
 		agregarLista();
 		cout<<endl<<endl;
 		sigue = validaEntero("Teclea 1 para agregar otra lista: ");
-		//ofstream archivo("nodos.txt");
 		unico = 0;
 	}
+	escrituraLista();
 	mostrarListas();
-	buscarLista();
-	//archivoEscritura(primero);
-	
+	//buscarLista();
 	return 0;
 }
+/**/

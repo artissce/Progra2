@@ -1,6 +1,10 @@
-void archivoEscritura(Empleado *primero){
+//listitas
+void archivoEscritura(Empleado *primero,int id){
 	Empleado *aux=primero;
-	ofstream archivo("nodos.txt");
+	char arch[20];
+	itoa(id,arch,10);//CONVERTIR UN ENTERO EN CADENA - lo que esta en id se pone en la variable arch
+	strcat(arch,".txt");//concateno
+	ofstream archivo(arch);//creame este archivo
 	while(aux!=NULL){
 		archivo<<aux->idEmpleado<<"\t";
 		archivo<<aux->nombre<<"\t";
@@ -11,15 +15,20 @@ void archivoEscritura(Empleado *primero){
 	}
 	archivo.close();
 }
-Empleado *archivoLectura(){
+Empleado *archivoLectura(int id){
 	Empleado *primero=NULL;
 	Empleado *ultimo=NULL;
 	Empleado *nuevo=NULL;
-	Empleado nodo;
+	//Empleado nodo;
+	char archivo[20];
+	itoa(id,archivo,10);//CONVERTIR UN ENTERO EN CADENA - lo que esta en id se pone en la variable arch
+	strcat(archivo,".txt");//concateno
 
-	ifstream arch("nodos.txt");
+	ifstream arch(archivo);
 	string linea, c;
 
+	//muestra las listitas
+	cout<<id<<endl;
 	if(arch.fail()) cerr<<"Error al abrir el archivo"<<endl;
 	else{
 		while(getline(arch,linea)){

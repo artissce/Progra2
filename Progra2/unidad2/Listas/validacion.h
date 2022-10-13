@@ -1,21 +1,25 @@
-int validaid(const char mensaje[]){
-	int entero=0;
-	int c2=0;
+int validaId(const char mensaje[]){
+	int id = 0;
+	int c = 0;
 	do{
 		Empleado *auxiliar=primero;
-		c2=0;
+		Empleado *auxiliar2=primero;
+		c = 0;
 		printf("\n%s",mensaje);
-		scanf("%d",&entero);
+		scanf("%d",&id);
 		while(auxiliar!=NULL){
-			if(entero==auxiliar->idEmpleado){
-			c2++;
-			printf("error vuelva a intentar");
+			if(id == auxiliar->idEmpleado){
+				c++;
+				printf("El ID ya existe");
+				system("cls");
 			}
-			auxiliar=auxiliar->sig;	
+			auxiliar = auxiliar->sig;
+			if(auxiliar == auxiliar2){
+				break;
+			}
 		}
-	}while (c2!=0);
-	
-	return entero;
+	}while (c!=0);
+	return id;
 }
 float validaFlotante(const char mensaje[]){
 	int continuar;
